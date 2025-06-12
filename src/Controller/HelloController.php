@@ -24,4 +24,8 @@ final class HelloController extends AbstractController
                 'menssage' => "Hello $nome"
             ]);
     }
+
+    //1-Criar um método para calcular idade a partir do ano de nascimento.
+    //2-Calcular se a data é de um menor de idade ou não e retornar o mesmo objeto json.
+    //3- Criar um metodo para receber um CPF e retornar eles formatado.
 }
