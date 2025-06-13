@@ -71,4 +71,32 @@ final class ProdutosController extends AbstractController
 
         return $this->json($produtoSalvo);
     }
+
+    #[Route('/produtos/{id}', methods: ['PUT'], name:'produtos_update')]
+    public function update(
+        int $id,
+
+        #[MapRequestPayload(acceptFormat:'json')]
+        Produto $produto,
+        ProdutoRepository $produtoRepository,
+
+        EntityManagerInterface $entityManager
+    ): JsonResponse {
+        $produtoSalvo = $produtoRepository->find($id);
+
+        if (!$produtoSalvo) {
+            throw $this->createNotFoundException(
+                'Produto de ID'. $id . 'não encontrado!'
+            );   
+        }
+
+        $produtoSalvo->setNome($produto->getNome());
+        $produtoSalvo->setDescricao($produto->getDescricao());
+        $produtoSalvo->setPreco($produto->getPreco());
+
+        $entityManager->persist($produtoSalvo);
+        $entityManager->flush();
+
+        return $this->json($produtoSalvo);
+    }
 }
